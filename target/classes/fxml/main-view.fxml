@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.jtune.controller.MainController">
+
+    <!-- LEFT SIDEBAR -->
+    <left>
+        <VBox spacing="10.0" styleClass="sidebar-left">
+            <padding><Insets bottom="14" left="14" right="14" top="14"/></padding>
+            <Label styleClass="app-title" text="JTune"/>
+            <Label styleClass="section-title" text="Библиотека"/>
+            <HBox spacing="8">
+                <Button mnemonicParsing="false" onAction="#onCreatePlaylist" text="New"/>
+                <Button mnemonicParsing="false" onAction="#onDeletePlaylist" text="Delete"/>
+            </HBox>
+            <ListView fx:id="playlistListView" prefHeight="200"/>
+            <Label styleClass="section-title" text="Артисты"/>
+            <ListView fx:id="artistListView" VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </left>
+
+    <!-- CENTER -->
+    <center>
+        <VBox spacing="12" styleClass="center-panel">
+            <padding><Insets bottom="16" left="16" right="16" top="16"/></padding>
+            <Label styleClass="welcome-title" text="Добрый вечер"/>
+            <HBox spacing="8">
+                <TextField fx:id="searchField" onAction="#onSearchAction"
+                           promptText="Поиск по названию или артисту..."
+                           HBox.hgrow="ALWAYS"/>
+                <Button mnemonicParsing="false" onAction="#onSearchAction" text="Search"/>
+                <Button mnemonicParsing="false" onAction="#onClearSearch" text="Clear"/>
+            </HBox>
+            <Label fx:id="contentModeLabel" styleClass="song-artist" text="Все песни"/>
+            <FlowPane fx:id="recommendationPane" hgap="10" vgap="10"/>
+            <Label styleClass="section-title" text="Треки"/>
+            <ListView fx:id="songListView" VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </center>
+
+    <!-- RIGHT SIDEBAR — Now Playing + Player controls -->
+    <right>
+        <VBox spacing="10" styleClass="sidebar-right">
+            <padding><Insets bottom="14" left="14" right="14" top="14"/></padding>
+
+            <Label styleClass="section-title" text="Сейчас играет"/>
+
+            <!-- Album cover -->
+            <ImageView fx:id="nowPlayingCoverImageView"
+                       fitHeight="200" fitWidth="220"
+                       pickOnBounds="true" preserveRatio="true"
+                       styleClass="cover-image"/>
+
+            <!-- Title + Artist -->
+            <Label fx:id="nowPlayingTitleLabel" styleClass="song-title"
+                   text="Ничего не играет" wrapText="true"/>
+            <Label fx:id="nowPlayingArtistLabel" styleClass="song-artist"
+                   text="-" wrapText="true"/>
+
+            <!-- Progress bar + time -->
+            <HBox spacing="6" alignment="CENTER">
+                <Label fx:id="elapsedLabel" styleClass="time-label" text="00:00"/>
+                <Slider fx:id="progressSlider" styleClass="progress-slider"
+                        HBox.hgrow="ALWAYS"/>
+                <Label fx:id="durationLabel" styleClass="time-label" text="00:00"/>
+            </HBox>
+
+            <!-- Transport buttons -->
+            <HBox spacing="6" alignment="CENTER">
+                <Button fx:id="prevButton" mnemonicParsing="false"
+                        onAction="#onPrevious" text="⏮"
+                        styleClass="transport-btn"
+                        visible="false" managed="false"/>
+                <Button fx:id="playPauseButton" mnemonicParsing="false"
+                        onAction="#onPlayPause" text="▶"
+                        styleClass="transport-btn-primary"/>
+                <Button fx:id="stopButton" mnemonicParsing="false"
+                        onAction="#onStop" text="⏹"
+                        styleClass="transport-btn"/>
+                <Button fx:id="nextButton" mnemonicParsing="false"
+                        onAction="#onNext" text="⏭"
+                        styleClass="transport-btn"
+                        visible="false" managed="false"/>
+            </HBox>
+
+            <!-- Volume -->
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label styleClass="time-label" text="🔊"/>
+                <Slider fx:id="volumeSlider" max="100" value="70"
+                        styleClass="volume-slider" HBox.hgrow="ALWAYS"/>
+            </HBox>
+
+            <!-- Hidden labels needed by controller (not shown) -->
+            <Label fx:id="bottomSongTitleLabel" visible="false" managed="false"/>
+            <Label fx:id="bottomSongArtistLabel" visible="false" managed="false"/>
+            <ImageView fx:id="playerBarCoverView" visible="false" managed="false"/>
+
+        </VBox>
+    </right>
+
+</BorderPane>
